@@ -10,13 +10,13 @@ public class DiceGameWithFileIO {
     public void registerPlayers(Person playerA, Person playerB) {
         this.playerA = playerA;
         this.playerB = playerB;
-    }
+    } 
 
     public void startGame() {
         playerA.rollDice(new Dice(), new Dice());
         playerB.rollDice(new Dice(), new Dice());
 
-        int[] diceValuesA = playerA.getDiceValues();
+        int[] diceValuesA = playerA.getDiceValues(); // 주사위를 굴리고 밑에서 값을 출력
         int[] diceValuesB = playerB.getDiceValues();
 
         System.out.println(playerA.getName() + " rolled " + diceValuesA[0] + " and " + diceValuesA[1] +
@@ -25,7 +25,8 @@ public class DiceGameWithFileIO {
                 " (Total: " + playerB.getSumOfDice() + ")");
 
         String result = "";
-
+        
+        // 승 패 확인 
         if (playerA.getSumOfDice() > playerB.getSumOfDice()) {
             System.out.println(playerA.getName() + " wins!");
             result = playerA.getName() + " wins!";
@@ -50,7 +51,8 @@ public class DiceGameWithFileIO {
 
         writeGameResultToFile(result, playerA, playerB);
     }
-
+    
+    // 결과를 파일로 기록.
     private void writeGameResultToFile(String result, Person playerA, Person playerB) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("game_results.txt", true));
@@ -70,7 +72,7 @@ public class DiceGameWithFileIO {
         DiceGameWithFileIO game = new DiceGameWithFileIO();
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        while (true) { // 옵션 선택
             System.out.println("Choose an option:");
             System.out.println("1. Start a new game");
             System.out.println("2. View game records");
@@ -78,7 +80,7 @@ public class DiceGameWithFileIO {
             int option = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
 
-            if (option == 1) {
+            if (option == 1) { // 게이머의 이름을 입력 받고 객체를 생성
                 System.out.println("Enter the name of Player A:");
                 String nameA = scanner.nextLine();
                 System.out.println("Enter the name of Player B:");
@@ -90,7 +92,7 @@ public class DiceGameWithFileIO {
                 game.registerPlayers(playerA, playerB);
                 game.startGame();
                 
-                System.out.println("one more game? > Y/N");
+                System.out.println("one more game? > Y/N"); // 게임을 더 하고 싶은데 자꾸 이름을 다시 입력해야 해서 'Y'만 누루면 다시 주사위를 돌리도록 구현.
                 String playAgainOption = scanner.nextLine();
                 if (!playAgainOption.equalsIgnoreCase("Y")) {
                     break;
